@@ -1,6 +1,5 @@
 export class Dice {
     d: number
-    // avgRoll: number
 
     constructor(init: Partial<Dice>) {
         Object.assign(this, init)
@@ -34,16 +33,6 @@ export type d6Numbers = 1|2|3|4|5|6
 
 function getRollOddsForNumberOrHigher(numberOfSuccesses: number, numberOfPossibleOutcomes): number {
     return numberOfSuccesses / numberOfPossibleOutcomes
-}
-
-export type d3Numbers = 1|2|3
-
-export const d3DiceRollAverage = 2
-export const d6DiceRollAvg = 3.50
-
-export enum diceName {
-    'd3' = 'd3',
-    'd6' = 'd6'
 }
 
 export function getToWoundOdds(userValue: number, targetsValue: number): number {
