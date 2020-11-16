@@ -7,7 +7,6 @@ export class Dice {
 
     rollForNumberOrHigherOdds(targetNumberPlus: number): number {
         const numberOfSuccesses = this.getSuccessOnNumberPlus(targetNumberPlus)
-        console.log({targetNumberPlus, numberOfSuccesses})
         return getRollOddsForNumberOrHigher(numberOfSuccesses, this.d)
     }
 

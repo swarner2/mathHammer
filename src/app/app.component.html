@@ -18,4 +18,32 @@
   </li>
 </ul>
 
+  Weapon Wound Average
+  <table>
+    <tr>
+      <th *ngFor="let t of toughness">{{t}}</th>
+    </tr>
+    <tr>
+      <td *ngFor="let t of toughness">{{termagant.getWeaponWoundAverage('devourer', t)}}</td>
+    </tr>
+  </table>
+  <div>
+</div>
+
+amount that gets through SV
+<div *ngFor="let sv of svs">
+  Save: {{sv}}+
+  <table>
+    <tr>
+      <th *ngFor="let t of toughness">T{{t}},</th>
+    </tr>
+    <tr>
+      <td *ngFor="let t of toughness">{{termagant.getWeaponAPAfterWoundAverage('devourer', t, sv, 0) | number:"1.0-2" }}, </td>
+    </tr>
+  </table>
+</div>
+
+
+
+
 <router-outlet></router-outlet>

@@ -9,16 +9,14 @@ import { termagant } from './data/tyranids/units/termagant.data';
 export class AppComponent implements OnInit {
   title = 'mathHammer ' + termagant.name + ' avg bs hit = ' + termagant.hitAverage;
   toughness = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  termagant = termagant
+  svs = [2, 3, 4, 5, 6]
 
-  ngOnInit(): void {
-    const woundMap = this.toughness.map(t => {
-      return termagant.getWeaponWoundAverage('devourer', t)
+  saveAfterWoundAndSvMap = this.toughness.map(t => {
+      return this.svs.map(sv => {
+        return termagant.getWeaponAPAfterWoundAverage('devourer', t, sv, 0)
+      })
     })
 
-    console.log({woundMap})
-
-    const svs = [1, 2, 3, 4, 5, 6]
-    const saveMap = svs.map(sv => termagant.getWeaponArmorPiercingAverage('devourer', sv))
-    console.log({saveMap})
-  }
+  ngOnInit(): void {}
 }

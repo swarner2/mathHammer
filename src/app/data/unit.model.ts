@@ -52,21 +52,31 @@ export class Unit {
         return this.getWeaponAverageHits(unitWeaponName) * getToWoundOdds(weaponStrength, targetUnitToughness)
     }
 
-    getWeaponArmorPiercingAverage(unitWeaponName: string, SV: number): number {
+    getWeaponArmorPiercingAverage(unitWeaponName: string, SV: number, invunSave: number = 0): number {
         const weapon = this.getWeapon(unitWeaponName)
-        //  TODO :: Handle invun
-        const AP = weapon.armorPiercing
-        if (AP === 0) {
-            return 1
+
+        let afterAP = SV + weapon.armorPiercing
+        if (afterAP > invunSave) {
+            afterAP = invunSave
         }
-        const afterAP = SV + AP
-        console.log({afterAP, SV, AP})
-        return afterAP > 6 ? 1 : d6.rollForNumberOrHigherOdds(afterAP)
+        if (afterAP === 0) {
+            return 1 - d6.rollForNumberOrHigherOdds(SV)
+        }
+        return afterAP > 6 ? 1 : 1 - d6.rollForNumberOrHigherOdds(afterAP)
     }
 
     // TODO :: take targetUnit instead of targetUnitToughness and targetUnitArmorSave
-    getWeaponDamageAverage(unitWeaponName: string, targetUnitToughness: number, targetUnitArmorSave: number): number {
-        return this.getWeaponWoundAverage(unitWeaponName, targetUnitToughness)
+    getWeaponAPAfterWoundAverage(unitWeaponName: string, targetUnitToughness: number,
+        targetUnitArmorSave: number, targetUnitInvunSave: number): number {
+      return this.getWeaponWoundAverage(unitWeaponName, targetUnitToughness) *
+      this.getWeaponArmorPiercingAverage(unitWeaponName, targetUnitArmorSave, targetUnitInvunSave)
+    }
+
+    // TODO :: take targetUnit instead of targetUnitToughness and targetUnitArmorSave
+    getWeaponDamageAverage(unitWeaponName: string, targetUnitToughness: number,
+        targetUnitArmorSave: number, targetUnitInvunSave: number): number {
+        const weaponDamage = this.getWeapon(unitWeaponName).damage
+        return null
     }
 }
 
