@@ -30,7 +30,7 @@
   <div>
 </div>
 
-amount that gets through SV
+Average Damage Table
 <div *ngFor="let sv of svs">
   Save: {{sv}}+
   <table>
@@ -38,12 +38,10 @@ amount that gets through SV
       <th *ngFor="let t of toughness">T{{t}},</th>
     </tr>
     <tr>
-      <td *ngFor="let t of toughness">{{termagant.getWeaponAPAfterWoundAverage('devourer', t, sv, 0) | number:"1.0-2" }}, </td>
+      <td *ngFor="let t of toughness">
+        {{termagant.getAverageDamageOfWeaponVsUnit('devourer', t, sv, 0) | number:"1.0-2" }}, </td>
     </tr>
   </table>
 </div>
-
-
-
 
 <router-outlet></router-outlet>
