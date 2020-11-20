@@ -17,4 +17,4 @@ export class Weapon {
 
 export type weaponType = 'assault'|'heavy'|'rapid fire'|'grenade'|'pistol'
 
-export type faction = 'Tyranid'
+export type faction = 'Tyranid' | 'Space Marine'

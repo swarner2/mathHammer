@@ -1,5 +1,5 @@
 import { Unit } from '../../unit.model';
-import { devourer } from '../weapons/devourer.data';
+import { TyranidWeapons } from '../weapons/tyranid_weapons';
 
   export const termagant = new Unit({
     name: 'termagant',
@@ -12,6 +12,6 @@ import { devourer } from '../weapons/devourer.data';
     leadership: 5,
     save: 6,
     invunSave: null,
-    weapons: [devourer],
-    availableWeapons: [devourer]
+    weapons: [TyranidWeapons.devourer],
+    availableWeapons: [TyranidWeapons.devourer]
   })

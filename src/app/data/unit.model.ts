@@ -11,6 +11,8 @@ export class Unit {
     balisticSkill: d6Numbers
     strength: number
     toughness: number
+    wounds: number
+    attacks: number | Dice
     leadership: number
     save: d6Numbers
     invunSave: d6Numbers
@@ -30,31 +32,30 @@ export class Unit {
         return this.weapons.find(weapon => weapon.name === unitWeaponName)
     }
 
-    getWeaponAverageShots(unitWeaponName: string): number {
-        const targetWeaponShots = this.getWeaponByName(unitWeaponName).shots
+    getWeaponAverageShots(unitWeapon: Weapon): number {
+        // TODO :: Handle rapid fire and blast
+        const targetWeaponShots = unitWeapon.shots
         if (typeof targetWeaponShots === 'number') {
            return targetWeaponShots
         }
         return targetWeaponShots.averageDiceRoll
     }
 
-    getWeaponAverageHits(unitWeaponName: string): number {
-        return this.getWeaponAverageShots(unitWeaponName) * d6.rollForNumberOrHigherOdds(this.balisticSkill)
+    getWeaponAverageHits(unitWeapon: Weapon): number {
+        return this.getWeaponAverageShots(unitWeapon) * d6.rollForNumberOrHigherOdds(this.balisticSkill)
     }
 
-    getWeaponStrength(unitWeaponName: string): number {
-        const targetWeapon: Weapon = this.getWeaponByName(unitWeaponName)
-        return targetWeapon.strength === 'user' ? this.strength : targetWeapon.strength
+    getWeaponStrength(unitWeapon: Weapon): number {
+        return unitWeapon.strength === 'user' ? this.strength : unitWeapon.strength
     }
 
-    getWeaponWoundAfterHitsAverage(unitWeaponName: string, targetUnitToughness: number): number {
-        const weaponStrength: number = this.getWeaponStrength(unitWeaponName)
-        return this.getWeaponAverageHits(unitWeaponName) * getToWoundOdds(weaponStrength, targetUnitToughness)
+    getWeaponWoundAfterHitsAverage(unitWeapon: Weapon, targetUnitToughness: number): number {
+        const weaponStrength: number = this.getWeaponStrength(unitWeapon)
+        return this.getWeaponAverageHits(unitWeapon) * getToWoundOdds(weaponStrength, targetUnitToughness)
     }
 
-    getWeaponArmorPiercingAverage(unitWeaponName: string, SV: number, invunSave: number = 0): number {
-        const weapon = this.getWeaponByName(unitWeaponName)
-        let afterAP = SV + weapon.armorPiercing
+    getWeaponArmorPiercingAverage(unitWeapon: Weapon, SV: number, invunSave: number = 0): number {
+        let afterAP = SV + unitWeapon.armorPiercing
         if (afterAP > invunSave) {
             afterAP = invunSave
         }
@@ -65,19 +66,19 @@ export class Unit {
     }
 
     // tslint:disable-next-line: max-line-length
-    getWeaponAPAfterWoundAverage(unitWeaponName: string, targetUnitToughness: number, targetUnitArmorSave: number, targetUnitInvunSave: number): number {
-        return this.getWeaponWoundAfterHitsAverage(unitWeaponName, targetUnitToughness) *
-        this.getWeaponArmorPiercingAverage(unitWeaponName, targetUnitArmorSave, targetUnitInvunSave)
+    getWeaponAPAfterWoundAverage(unitWeapon: Weapon, targetUnitToughness: number, targetUnitArmorSave: number, targetUnitInvunSave: number): number {
+        return this.getWeaponWoundAfterHitsAverage(unitWeapon, targetUnitToughness) *
+        this.getWeaponArmorPiercingAverage(unitWeapon, targetUnitArmorSave, targetUnitInvunSave)
     }
 
-    getAmountOfDamage(unitWeaponName: string): number {
-        const weaponDamage = this.getWeaponByName(unitWeaponName).damage
+    getAmountOfDamage(unitWeapon: Weapon): number {
+        const weaponDamage = unitWeapon.damage
         return typeof weaponDamage === 'number' ? weaponDamage : weaponDamage.averageDiceRoll
     }
 
     // tslint:disable:max-line-length
-    getAverageDamageOfWeaponVsUnit(unitWeaponName: string, targetUnitToughness: number, targetUnitArmorSave: number, targetUnitInvunSave: number): number {
-        return this.getWeaponAPAfterWoundAverage(unitWeaponName, targetUnitToughness, targetUnitArmorSave, targetUnitInvunSave) * this.getAmountOfDamage(unitWeaponName)
+    getAverageDamageOfWeaponVsUnit(unitWeapon: Weapon, targetUnitToughness: number, targetUnitArmorSave: number, targetUnitInvunSave: number): number {
+        return this.getWeaponAPAfterWoundAverage(unitWeapon, targetUnitToughness, targetUnitArmorSave, targetUnitInvunSave) * this.getAmountOfDamage(unitWeapon)
     }
 }
 
