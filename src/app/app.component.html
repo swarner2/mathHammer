@@ -32,6 +32,13 @@
   </select>
 </div>
 
+<div>
+  Select Amount Of Weapons
+  <select *ngIf="selectedUnit" #amountDropdown (change)="handleAmountChange(amountDropdown.value)">
+    <option *ngFor="let amount of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]" [value]="amount">{{amount}}</option>
+  </select>
+</div>
+
 
 
 {{unitDropdown.value | json}}
@@ -45,7 +52,7 @@ Average Damage Table
       </tr>
       <tr>
         <td *ngFor="let t of toughness">
-          {{selectedUnit.getAverageDamageOfWeaponVsUnit(selectedWeapon, t, sv, 0) | number:"1.0-2" }}, </td>
+          {{selectedUnit.getAverageDamageOfWeaponVsUnit(selectedWeapon, t, sv, 0) * selectedAmount | number:"1.0-2" }}, </td>
       </tr>
     </table>
   </div>

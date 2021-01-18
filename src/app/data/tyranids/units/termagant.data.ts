@@ -12,6 +12,7 @@ import { TyranidWeapons } from '../weapons/tyranid_weapons';
     leadership: 5,
     save: 6,
     invunSave: null,
-    weapons: [TyranidWeapons.devourer],
-    availableWeapons: [TyranidWeapons.devourer]
+    attacks: 1,
+    weapons: [TyranidWeapons.fleshborer, TyranidWeapons.devourer, TyranidWeapons.spinefists],
+    availableWeapons: [TyranidWeapons.fleshborer, TyranidWeapons.devourer, TyranidWeapons.spinefists]
   })

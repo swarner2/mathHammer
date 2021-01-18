@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   units = Object.values(tyranidUnits).concat(Object.values(spaceMarineUnits))
   selectedUnit: Unit = this.units[0]
   selectedWeapon: Weapon = this.selectedUnit.weapons[0]
+  selectedAmount: Number = 1
 
   ngOnInit(): void {
     console.log(this.selectedUnit, this.selectedWeapon)
@@ -30,6 +31,9 @@ export class AppComponent implements OnInit {
 
   handleWeaponChange(name: string): void {
     this.selectedWeapon = this.selectedUnit.weapons.find(weapon => weapon.name === name)
-    console.log('selectedWeapon', this.selectedWeapon)
+  }
+
+  handleAmountChange(amount: number): void {
+    this.selectedAmount = amount
   }
 }

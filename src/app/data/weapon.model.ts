@@ -5,7 +5,7 @@ export class Weapon {
     faction: faction
     range: number
     type: weaponType
-    shots: Dice | number
+    shots: Dice | number | 'user'
     strength: number | 'user'
     armorPiercing: number
     damage: Dice | number

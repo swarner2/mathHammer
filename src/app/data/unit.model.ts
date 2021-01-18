@@ -34,10 +34,11 @@ export class Unit {
 
     getWeaponAverageShots(unitWeapon: Weapon): number {
         // TODO :: Handle rapid fire and blast
-        const targetWeaponShots = unitWeapon.shots
+        const targetWeaponShots = unitWeapon.shots === 'user' ? this.attacks : unitWeapon.shots
         if (typeof targetWeaponShots === 'number') {
            return targetWeaponShots
         }
+
         return targetWeaponShots.averageDiceRoll
     }
 
